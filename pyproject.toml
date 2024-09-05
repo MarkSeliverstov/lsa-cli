@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "template"
-version = "0.1.0"
-description = ""
+name = "lsa-cli"
+version = "0.1.4"
+description = "CLI part of Linked Software Artifacts project"
 authors = ["Mark Seliverstov <smdmrr00@gmail.com>"]
 readme = "README.md"
 packages = [
-    { include = "app", from = "src" },
+    { include = "lsa_cli_smdmrr", from = "src" },
 ]
 include = ["*.conf", "py.typed"]
 
@@ -24,7 +24,7 @@ pytest-mypy = "^0.10.3"
 pytest-ruff = "^0.3.2"
 
 [tool.poetry.scripts]
-app = "app.__main__:main"
+lsa-cli = "lsa_cli_smdmrr.__main__:main"
 
 [tool.pytest.ini_options]
 addopts = """
