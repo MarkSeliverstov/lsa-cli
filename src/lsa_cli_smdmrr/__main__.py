@@ -1,5 +1,8 @@
+from .cli import run
+
+
 def main() -> None:
-    print("Hello, World!")
+    run()
 
 
 if __name__ == "__main__":

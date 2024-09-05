@@ -1,16 +1,18 @@
 [tool.poetry]
 name = "lsa-cli"
-version = "0.1.4"
+version = "0.1.5"
 description = "CLI part of Linked Software Artifacts project"
 authors = ["Mark Seliverstov <smdmrr00@gmail.com>"]
 readme = "README.md"
 packages = [
     { include = "lsa_cli_smdmrr", from = "src" },
 ]
-include = ["*.conf", "py.typed"]
+include = ["py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
+structlog = "^24.4.0"
+comment-parser = "^1.2.4"
 
 [tool.poetry.group.dev.dependencies]
 pre-commit = "^3.3.3"
