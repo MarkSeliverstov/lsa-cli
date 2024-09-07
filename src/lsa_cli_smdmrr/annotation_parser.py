@@ -1,6 +1,4 @@
-import json
 import os
-from typing import Any
 
 import structlog
 from comment_parser import comment_parser  # type: ignore[import-untyped]
@@ -77,17 +75,3 @@ class AnnotationParser:
         annotation_name: str = annotation[len(self.annotation_prefix) :]
         value: str | None = tokens[1].strip() if len(tokens) == 2 else None
         return Annotation(name=annotation_name, value=value, line_number=comment.line_number())
-
-
-def export_annotations_to_json(model: list[SourceFileAnnotations], file: str) -> None:
-    with open(file, "w") as f:
-        json_model: dict[Any, Any] = {
-            "filesAnnotations": [
-                {
-                    "relativeFilePath": source_file.relative_file_path,
-                    "annotations": [annotation.__dict__ for annotation in source_file.annotations],
-                }
-                for source_file in model
-            ]
-        }
-        json.dump(json_model, f, indent=4)

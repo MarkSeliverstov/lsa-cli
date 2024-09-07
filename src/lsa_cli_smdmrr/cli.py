@@ -5,9 +5,9 @@ from argparse import ArgumentParser, Namespace
 
 import structlog
 
-from lsa_cli_smdmrr.models import SourceFileAnnotations
+from lsa_cli_smdmrr.models import Entity, SourceFileAnnotations
 
-from .annotation_parser import AnnotationParser, export_annotations_to_json
+from .annotation_parser import AnnotationParser
 from .annotations_to_entities_converter import AnnotationsToEntitiesConverter
 from .config import Config
 
@@ -15,56 +15,55 @@ logger: structlog.BoundLogger = structlog.get_logger()
 structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(logging.INFO))
 
 
-def _parse_command(path: str, config: Config) -> None:
-    logger.info("Parsing annotations from source code...")
+def _export_annotations_to_json(model: list[SourceFileAnnotations], file: str) -> None:
+    with open(file, "w") as f:
+        json.dump(
+            {"filesAnnotations": [file_annotation.to_json() for file_annotation in model]},
+            f,
+            indent=4,
+        )
+
+
+def _export_entities_to_json(entities: list[Entity], file: str) -> None:
+    with open(file, "w") as f:
+        json.dump({"entities": [entity.to_json() for entity in entities]}, f, indent=4)
+
+
+def _parse_and_convert(args: Namespace, config: Config) -> None:
+    if not os.path.exists(args.path):
+        logger.error(f"Path not found: '{args.path}'")
+        return
+
     parser: AnnotationParser = AnnotationParser(
         config.parser_exclude, config.annotation_prefix, config.extensions_map
     )
 
-    model: list[SourceFileAnnotations] = parser.parse(path)
+    logger.info(f"Parsing all annotations from source code from '{args.path}'")
+    model: list[SourceFileAnnotations] = parser.parse(args.path)
     if not model:
-        logger.info("No annotations found to save.")
+        logger.info("No annotations found...")
         return
+    logger.info(f"Found {len(model)} files with annotations")
 
-    output: str = config.output_annotations_file
-    logger.info(f"Saving annotations to '{output}'")
-    export_annotations_to_json(model, output)
+    if args.annotations:
+        _export_annotations_to_json(model, config.output_annotations_file)
+        logger.info(f"Annotations saved to '{config.output_annotations_file}'")
 
-
-def _convert_command(config: Config, save_annotations: bool) -> None:
-    logger.info("Converting annotations to entities...")
-    converter = AnnotationsToEntitiesConverter(config.annotations_markers_map)
-
-    if not os.path.exists(config.output_annotations_file):
-        logger.error(f"Annotations file not found: '{config.output_annotations_file}'")
-        return
-
-    with open(config.output_annotations_file, "r") as f:
-        annotations = json.load(f)
-
-    entities = converter.convert(annotations)
-    if not save_annotations:
-        os.remove(config.output_annotations_file)
-
-    if not entities:
-        logger.info("No entities found to save.")
-        return
-
-    with open(config.output_entities_file, "w") as f:
-        logger.info(f"Saving entities to '{config.output_entities_file}'")
-        json.dump(entities, f, indent=4)
+    logger.info("Converting annotations to entities")
+    converter: AnnotationsToEntitiesConverter = AnnotationsToEntitiesConverter(
+        config.annotations_markers_map
+    )
+    entities: list[Entity] = converter.convert(model)
+    logger.info(f"Found {len(entities)} entities")
+    _export_entities_to_json(entities, config.output_entities_file)
+    logger.info(f"Entities saved to '{config.output_entities_file}'")
 
 
 def run() -> None:
-    # Commands for parse annotations, convert annotations to entities and save entities as enum
     parser: ArgumentParser = ArgumentParser(
         description="Parses annotations from source code and convert them to entities."
     )
-    parser.add_argument(
-        "path",
-        help="Path to file or directory to parse",
-        type=str,
-    )
+    parser.add_argument("path", help="Path to file or directory to parse", type=str)
     parser.add_argument(
         "-c",
         "--config",
@@ -77,8 +76,6 @@ def run() -> None:
         help="Parsed annotations will be saved to file if this flag is set",
         action="store_true",
     )
-
     args: Namespace = parser.parse_args()
     config: Config = Config.from_file(args.config) if args.config else Config.from_default()
-    _parse_command(args.path, config)
-    _convert_command(config, args.annotations)
+    _parse_and_convert(args, config)

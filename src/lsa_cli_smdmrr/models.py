@@ -1,5 +1,6 @@
 from copy import deepcopy
 from dataclasses import dataclass, field
+from typing import Any
 
 
 # @lc-entity
@@ -37,6 +38,12 @@ class SourceFileAnnotations:
     def __post_init__(self) -> None:
         if self.annotations:
             self.annotations = deepcopy(self.annotations)
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "relativeFilePath": self.relative_file_path,
+            "annotations": [annotation.__dict__ for annotation in self.annotations],
+        }
 
 
 # @lc-entity
@@ -76,6 +83,14 @@ class EntityInstance:
         if self.properties:
             self.properties = deepcopy(self.properties)
 
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "from_file": self.from_file,
+            "identifier": self.identifier,
+            "description": self.description,
+            "properties": [prop.__dict__ for prop in self.properties],
+        }
+
 
 # @lc-entity
 # @lc-identifier :Entity
@@ -93,3 +108,9 @@ class Entity:
     def __post_init__(self) -> None:
         if self.instances:
             self.instances = deepcopy(self.instances)
+
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "instances": [instance.to_json() for instance in self.instances],
+        }
