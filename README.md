@@ -1,4 +1,4 @@
-# LSA (Linked Software Artifacts) CLI
+# LSA (Linking Software Artifacts) CLI
 
 [![Version](https://img.shields.io/pypi/v/lsa-cli?logo=pypi)](https://pypi.org/project/lsa-cli)
 [![Python Version](https://img.shields.io/pypi/pyversions/lsa-cli?logo=python&logoColor=white)](https://pypi.org/project/lsa-cli)
