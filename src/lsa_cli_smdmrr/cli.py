@@ -58,6 +58,11 @@ def _parse_and_convert(args: Namespace, config: Config) -> None:
     _export_entities_to_json(entities, config.output_entities_file)
     logger.info(f"Entities saved to '{config.output_entities_file}'")
 
+    logger.info("""
+    You can use these entities/annotations to visualize them
+    on the webpage: https://markseliverstov.github.io/MFF-bachelor-work
+    """)
+
 
 def run() -> None:
     parser: ArgumentParser = ArgumentParser(
