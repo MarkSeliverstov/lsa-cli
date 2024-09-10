@@ -27,6 +27,106 @@ lsa-cli <path-to-source-code>
 -c, --config       Path to the configuration file
 ```
 
+### Example
+
+The CLI tool parses the source code:
+
+```typescript
+// @lc-entity
+// @lc-identifier :Annotation
+// @lc-name Annotation
+// @lc-description Base class for all annotations.
+export interface IAnnotation {
+  // @lc-property
+  // @lc-name name
+  name: string
+  // @lc-property
+  // @lc-name value
+  value: string | null
+  // @lc-property
+  // @lc-name annotationStartPos
+  startPos: number
+  // @lc-property
+  // @lc-name annotationEndPos
+  endPos: number
+  // @lc-property
+  // @lc-name annotationLine
+  lineNumber: number
+}
+```
+
+And generates the entities model by `lsa-cli source-file.ts`:
+
+```json
+{
+  "entities": [
+    {
+      "name": "Annotation",
+      "instances": [
+        {
+          "from_file": "source-file.ts",
+          "identifier": ":Annotation",
+          "description": "Base class for all annotations.",
+          "properties": [
+            {
+              "name": "name",
+              "description": null
+            },
+            {
+              "name": "value",
+              "description": null
+            },
+            {
+              "name": "annotationstartpos",
+              "description": null
+            },
+            {
+              "name": "annotationendpos",
+              "description": null
+            },
+            {
+              "name": "annotationline",
+              "description": null
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+```
+
+<details>
+<summary>
+Additionally, you can save the intermediate annotations model as JSON:
+</summary>
+
+```json
+{
+    "filesAnnotations": [
+        {
+            "relativeFilePath": "./source-file.ts",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":Annotation",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "Annotation",
+                    "lineNumber": 3
+                },
+        ...
+```
+
+</details>
+
 ## Configuration file
 
 Default configuration file is `.lsa-config.json` in the current working directory.
@@ -51,46 +151,39 @@ If the file is not found, default configuration is used:
     "method": "method",
     "source": "source"
   },
-  "output": {
-    "entities": "entities.json",
-    "annotations": "annotations.json"
-  },
   "parser": {
+    "output": {
+      "entities": "entities.json",
+      "annotations": "annotations.json"
+    },
     "exclude": [],
     "extend": {}
   },
 }
 ```
 
-#### markers
+- `<prefix><marker>` - Defines the annotations, where
+  - `prefix` - Prefix for the annotations.
+  - `markers` - Annotation markers (for example, `<prefix>entity`).
+- `parser` - Parser settings for the CLI.
+  - `output` - Output files for the CLI.
+  - `exclude` - Paths to exclude from parsing.
 
-In the `markers` section you can specify the names of the fields that are used
-in the annotations.
+    ```json
+    "exclude": ["node_modules", ".git", ".venv"]
+    ```
 
-#### output
+  - `extend` - File extensions to extend the parser. Where the key is the
+    extension and the value is the MIME type ( you can see the list of supported
+    MIME types [here](https://github.com/jeanralphaviles/comment_parser)).
 
-In the `output` section you can specify the names of the files where the
-entities and annotations will be saved.
-
-#### parser
-
-In the `parser` section you can specify the file extensions that should be
-parsed and the files that should be excluded from the parsing.
-
-**Example:**
-
-```bash
-...
-"parser": {
-  "exclude": ["node_modules"],
-  "extend": {
-    "cjs": "application/javascript",
-    "mjs": "application/javascript",
-    "jsx": "application/javascript"
-  }
-}
-...
-```
+    ```json
+    "extend": {
+      "cjs": "application/javascript",
+      "mjs": "application/javascript",
+      "jsx": "application/javascript"
+    }
+    ```
 
 ## Development
 

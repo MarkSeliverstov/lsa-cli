@@ -71,8 +71,8 @@ class Config:
         with open(path) as f:
             user_config: dict[Any, Any] = json.load(f)
 
-        output: dict[Any, Any] = user_config.get("output", {})
         parser: dict[Any, Any] = user_config.get("parser", {})
+        output: dict[Any, Any] = parser.get("output", {})
         config: Config = Config(
             output_entities_file=output.get("entities", cls.output_entities_file),
             output_annotations_file=output.get("annotations", cls.output_annotations_file),
