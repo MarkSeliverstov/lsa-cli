@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "lsa-cli"
-version = "0.2.1"
+version = "0.2.2"
 description = "CLI part of Linking Software Artifacts project"
 authors = ["Mark Seliverstov <smdmrr00@gmail.com>"]
 readme = "README.md"
