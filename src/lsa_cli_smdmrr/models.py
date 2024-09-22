@@ -19,6 +19,13 @@ class Annotation:
     # @lc-name line
     line_number: int
 
+    def to_json(self) -> dict[str, Any]:
+        return {
+            "name": self.name,
+            "value": self.value,
+            "lineNumber": self.line_number,
+        }
+
 
 # @lc-entity
 # @lc-identifier :SourceFileAnotations
@@ -42,7 +49,7 @@ class SourceFileAnnotations:
     def to_json(self) -> dict[str, Any]:
         return {
             "relativeFilePath": self.relative_file_path,
-            "annotations": [annotation.__dict__ for annotation in self.annotations],
+            "annotations": [annotation.to_json() for annotation in self.annotations],
         }
 
 
