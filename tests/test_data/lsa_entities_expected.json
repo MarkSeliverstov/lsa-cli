@@ -1,0 +1,107 @@
+{
+    "entities": [
+        {
+            "name": "several_entity_1",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/several_entities.py",
+                    "identifier": ":SeveralEntities1",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "several_entity_2",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/several_entities.py",
+                    "identifier": ":SeveralEntities2",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "FullWithoutProperties",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/entity_without_properties.py",
+                    "identifier": ":FullWithoutProperties",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "FullWithProperties",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/entity_with_properties.py",
+                    "identifier": ":FullWithProperties",
+                    "description": null,
+                    "properties": [
+                        {
+                            "name": "property1",
+                            "description": null
+                        },
+                        {
+                            "name": "property2",
+                            "description": null
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "name": "same_entity_name",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/same_entities_names.py",
+                    "identifier": ":different_entity_identifier",
+                    "description": null,
+                    "properties": []
+                },
+                {
+                    "from_file": "./tests/test_data/same_entities_names.py",
+                    "identifier": ":different_entity_identifier",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "entityDifferentFormatting",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/different_formatting.py",
+                    "identifier": ":entityDifferentFormatting",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "same_entity_different_name1",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/same_entities_identifiers.py",
+                    "identifier": ":entity",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        },
+        {
+            "name": "same_entity_different_name2",
+            "instances": [
+                {
+                    "from_file": "./tests/test_data/same_entities_identifiers.py",
+                    "identifier": ":entity",
+                    "description": null,
+                    "properties": []
+                }
+            ]
+        }
+    ]
+}

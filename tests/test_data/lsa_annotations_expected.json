@@ -1,0 +1,219 @@
+{
+    "filesAnnotations": [
+        {
+            "relativeFilePath": "./tests/test_data/several_entities.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":SeveralEntities1",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "several_entity_1",
+                    "lineNumber": 3
+                },
+                {
+                    "name": "property",
+                    "value": null,
+                    "lineNumber": 5
+                },
+                {
+                    "name": "name",
+                    "value": "property",
+                    "lineNumber": 6
+                },
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 8
+                },
+                {
+                    "name": "identifier",
+                    "value": ":SeveralEntities2",
+                    "lineNumber": 9
+                },
+                {
+                    "name": "name",
+                    "value": "several_entity_2",
+                    "lineNumber": 10
+                }
+            ]
+        },
+        {
+            "relativeFilePath": "./tests/test_data/entity_without_properties.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":FullWithoutProperties",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "FullWithoutProperties",
+                    "lineNumber": 3
+                }
+            ]
+        },
+        {
+            "relativeFilePath": "./tests/test_data/entity_with_properties.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":FullWithProperties",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "FullWithProperties",
+                    "lineNumber": 3
+                },
+                {
+                    "name": "property",
+                    "value": null,
+                    "lineNumber": 6
+                },
+                {
+                    "name": "name",
+                    "value": "property1",
+                    "lineNumber": 7
+                },
+                {
+                    "name": "property",
+                    "value": null,
+                    "lineNumber": 9
+                },
+                {
+                    "name": "name",
+                    "value": "property2",
+                    "lineNumber": 10
+                },
+                {
+                    "name": "property",
+                    "value": null,
+                    "lineNumber": 13
+                },
+                {
+                    "name": "name",
+                    "value": "property3",
+                    "lineNumber": 14
+                }
+            ]
+        },
+        {
+            "relativeFilePath": "./tests/test_data/same_entities_names.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":different_entity_identifier",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "same_entity_name",
+                    "lineNumber": 3
+                },
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 5
+                },
+                {
+                    "name": "identifier",
+                    "value": ":different_entity_identifier",
+                    "lineNumber": 6
+                },
+                {
+                    "name": "name",
+                    "value": "same_entity_name",
+                    "lineNumber": 7
+                }
+            ]
+        },
+        {
+            "relativeFilePath": "./tests/test_data/different_formatting.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":entityDifferentFormatting",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "entityDifferentFormatting",
+                    "lineNumber": 3
+                },
+                {
+                    "name": "property",
+                    "value": null,
+                    "lineNumber": 5
+                },
+                {
+                    "name": "name",
+                    "value": "property",
+                    "lineNumber": 6
+                }
+            ]
+        },
+        {
+            "relativeFilePath": "./tests/test_data/same_entities_identifiers.py",
+            "annotations": [
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 1
+                },
+                {
+                    "name": "identifier",
+                    "value": ":entity",
+                    "lineNumber": 2
+                },
+                {
+                    "name": "name",
+                    "value": "same_entity_different_name1",
+                    "lineNumber": 3
+                },
+                {
+                    "name": "entity",
+                    "value": null,
+                    "lineNumber": 5
+                },
+                {
+                    "name": "identifier",
+                    "value": ":entity",
+                    "lineNumber": 6
+                },
+                {
+                    "name": "name",
+                    "value": "same_entity_different_name2",
+                    "lineNumber": 7
+                }
+            ]
+        }
+    ]
+}
