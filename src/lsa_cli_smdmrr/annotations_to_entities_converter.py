@@ -62,6 +62,13 @@ class AnnotationsToEntitiesConverter:
                             current_instance.description = annotation.value
 
         if current_instance:
+            if current_property:
+                current_instance.properties.append(
+                    Property(
+                        name=current_property.name,
+                        description=current_property.description,
+                    )
+                )
             self._add_instance(current_entity_name, current_instance)
 
     def convert(self, annotations: list[SourceFileAnnotations]) -> list[Entity]:
