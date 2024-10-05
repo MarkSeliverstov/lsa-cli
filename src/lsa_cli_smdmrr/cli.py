@@ -82,5 +82,5 @@ def run() -> None:
         action="store_true",
     )
     args: Namespace = parser.parse_args()
-    config: Config = Config.from_file(args.config) if args.config else Config.from_default()
+    config: Config = Config.from_file(args.config) if args.config else Config.from_file(Config.DEFAULT_CONFIG_PATH)
     _parse_and_convert(args, config)

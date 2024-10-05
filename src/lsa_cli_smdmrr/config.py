@@ -20,7 +20,7 @@ class AnnotationType(Enum):
 
 
 class Config:
-    _DEFAULT_CONFIG_PATH: str = ".lsa-config.json"
+    DEFAULT_CONFIG_PATH: str = ".lsa-config.json"
     extensions_map: dict[str, str] = {
         "ts": "application/javascript",
         "js": "application/javascript",
@@ -57,10 +57,6 @@ class Config:
             self.annotations_markers_map[annotation_type] = user_markers.get(
                 annotation_type.name.lower(), self.annotations_markers_map[annotation_type]
             )
-
-    @classmethod
-    def from_default(cls) -> "Config":
-        return cls.from_file(cls._DEFAULT_CONFIG_PATH)
 
     @classmethod
     def from_file(cls, path: str) -> "Config":
