@@ -9,7 +9,7 @@ from lsa_cli_smdmrr.models import Entity, SourceFileAnnotations
 
 from .annotation_parser import AnnotationParser
 from .annotations_to_entities_converter import AnnotationsToEntitiesConverter
-from .config import Config
+from .config import AnnotationType, Config
 
 logger: structlog.BoundLogger = structlog.get_logger()
 structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(logging.INFO))
@@ -35,7 +35,9 @@ def _parse_and_convert(args: Namespace, config: Config) -> None:
         return
 
     parser: AnnotationParser = AnnotationParser(
-        config.parser_exclude, config.annotation_prefix, config.extensions_map
+        config.parser_exclude,
+        config.annotations_markers_map[AnnotationType.PREFIX],
+        config.extensions_map,
     )
 
     logger.info(f"Parsing all annotations from source code from '{args.path}'")
@@ -82,5 +84,9 @@ def run() -> None:
         action="store_true",
     )
     args: Namespace = parser.parse_args()
-    config: Config = Config.from_file(args.config) if args.config else Config.from_file(Config.DEFAULT_CONFIG_PATH)
+    config: Config = (
+        Config.from_file(args.config)
+        if args.config
+        else Config.from_file(Config.DEFAULT_CONFIG_PATH)
+    )
     _parse_and_convert(args, config)

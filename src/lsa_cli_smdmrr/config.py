@@ -9,6 +9,7 @@ logger: BoundLogger = get_logger()
 
 
 class AnnotationType(Enum):
+    PREFIX = "@lc-"
     IDENTIFIER = "identifier"
     NAME = "name"
     TYPE = "type"
@@ -39,7 +40,6 @@ class Config:
     output_entities_file: str = "lsa-entities.json"
     output_annotations_file: str = "lsa-annotations.json"
     parser_exclude: list[str] = []
-    annotation_prefix: str = "@lc-"
 
     def __init__(
         self,
