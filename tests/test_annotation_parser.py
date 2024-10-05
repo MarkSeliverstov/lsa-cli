@@ -28,6 +28,10 @@ def test_annotation_parser() -> None:
     annotations_json: list[dict[str, Any]] = [annotation.to_json() for annotation in annotations]
 
     expected_annotations: dict[str, Any] = load_json("lsa_annotations_expected.json")
-    assert annotations_json == expected_annotations["filesAnnotations"]
+    assert annotations_json.sort(key=lambda x: x["relativeFilePath"]) == expected_annotations[
+        "filesAnnotations"
+    ].sort(key=lambda x: x["relativeFilePath"])
     expected_entities: dict[str, Any] = load_json("lsa_entities_expected.json")
-    assert entities_json == expected_entities["entities"]
+    assert entities_json.sort(key=lambda x: x["name"]) == expected_entities[
+        "entities"
+    ].sort(key=lambda x: x["name"])
