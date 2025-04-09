@@ -37,7 +37,6 @@ addopts = """
 asyncio_mode = "auto"
 
 [tool.poe.tasks]
-# Separate import sorting until https://github.com/astral-sh/ruff/issues/8232 is merged
 _ruff_sort_imports = "ruff check --select I --fix ."
 _ruff_format = "ruff format ."
 format-code = ["_ruff_sort_imports", "_ruff_format"]

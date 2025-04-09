@@ -3,7 +3,7 @@
 [![Version](https://img.shields.io/pypi/v/lsa-cli?logo=pypi)](https://pypi.org/project/lsa-cli)
 [![Python Version](https://img.shields.io/pypi/pyversions/lsa-cli?logo=python&logoColor=white)](https://pypi.org/project/lsa-cli)
 
-A part of [LSA](https://github.com/MarkSeliverstov/MFF-bachelor-work) project,
+The part of [LSA](https://github.com/MarkSeliverstov/MFF-bachelor-work) project,
 this CLI tool is used to parse `annotations` from source code and convert them
 to `entities`. Entities are then used to visualize the codebase on the
 [webpage](https://markseliverstov.github.io/MFF-bachelor-work).

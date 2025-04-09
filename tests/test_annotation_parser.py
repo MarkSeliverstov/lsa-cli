@@ -32,6 +32,6 @@ def test_annotation_parser() -> None:
         "filesAnnotations"
     ].sort(key=lambda x: x["relativeFilePath"])
     expected_entities: dict[str, Any] = load_json("lsa_entities_expected.json")
-    assert entities_json.sort(key=lambda x: x["name"]) == expected_entities[
-        "entities"
-    ].sort(key=lambda x: x["name"])
+    assert entities_json.sort(key=lambda x: x["name"]) == expected_entities["entities"].sort(
+        key=lambda x: x["name"]
+    )
