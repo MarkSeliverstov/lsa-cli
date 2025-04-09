@@ -26,12 +26,12 @@ class AnnotationParser:
 
         if os.path.isfile(path):
             annotation: SourceFileAnnotations | None = self._parse_file(path)
-            return [annotation] if annotation else []
+            return [annotation] if annotation and len(annotation.annotations) > 0 else []
 
         elif os.path.isdir(path):
             sourceFileAnnotations: list[SourceFileAnnotations] = []
-            for root, dirs, files in os.walk(path):
-                for file in files + dirs:
+            for root, _, files in os.walk(path):
+                for file in files:
                     sourceFileAnnotations.extend(self.parse(os.path.join(root, file)))
             return sourceFileAnnotations
         else:
