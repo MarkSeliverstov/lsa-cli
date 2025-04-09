@@ -1,0 +1,33 @@
+{
+  "markers": {
+    "prefix": "@lc-",
+    "identifier": "identifier",
+    "name": "name",
+    "description": "description",
+    "entity": "entity",
+    "property": "property",
+    "method": "method",
+    "source": "source"
+  },
+  "parser": {
+    "output": {
+      "entities": "entities.json",
+      "annotations": "annotations.json"
+    },
+    "exclude": [
+      "node_modules",
+      ".git",
+      ".venv",
+      ".DS_Store",
+      "__pycache__",
+      ".mypy_cache",
+      "ruff_cache",
+      "pytest_cache"
+    ],
+    "extend": {
+      "cjs": "application/javascript",
+      "mjs": "application/javascript",
+      "jsx": "application/javascript"
+    }
+  }
+}
