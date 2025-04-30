@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from copy import deepcopy
 from dataclasses import dataclass, field
 from typing import Any
@@ -66,6 +68,10 @@ class Property:
     # @lc-name value
     description: str | None
 
+    @staticmethod
+    def from_json(json: dict[str, Any]) -> Property:
+        return Property(name=json["name"], description=json["description"])
+
 
 # @lc-entity
 # @lc-identifier :EntityInstance
@@ -98,6 +104,15 @@ class EntityInstance:
             "properties": [prop.__dict__ for prop in self.properties],
         }
 
+    @staticmethod
+    def from_json(json: dict[str, Any]) -> EntityInstance:
+        return EntityInstance(
+            from_file=json["from_file"],
+            identifier=json["identifier"],
+            description=json["description"],
+            properties=[Property.from_json(property_json) for property_json in json["properties"]],
+        )
+
 
 # @lc-entity
 # @lc-identifier :Entity
@@ -121,3 +136,12 @@ class Entity:
             "name": self.name,
             "instances": [instance.to_json() for instance in self.instances],
         }
+
+    @staticmethod
+    def from_json(json: dict[str, Any]) -> Entity:
+        return Entity(
+            name=json["name"],
+            instances=[
+                EntityInstance.from_json(instance_json) for instance_json in json["instances"]
+            ],
+        )

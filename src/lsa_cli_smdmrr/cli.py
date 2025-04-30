@@ -1,4 +1,3 @@
-import json
 import logging
 import os
 from argparse import ArgumentParser, Namespace
@@ -6,6 +5,8 @@ from argparse import ArgumentParser, Namespace
 import structlog
 
 from lsa_cli_smdmrr.models import Entity, SourceFileAnnotations
+from lsa_cli_smdmrr.utils import export_annotations_to_json, export_entities_to_json
+from lsa_cli_smdmrr.validator import validate
 
 from .annotation_parser import AnnotationParser
 from .annotations_to_entities_converter import AnnotationsToEntitiesConverter
@@ -13,20 +14,6 @@ from .config import AnnotationType, Config
 
 logger: structlog.BoundLogger = structlog.get_logger()
 structlog.configure(wrapper_class=structlog.make_filtering_bound_logger(logging.INFO))
-
-
-def _export_annotations_to_json(model: list[SourceFileAnnotations], file: str) -> None:
-    with open(file, "w") as f:
-        json.dump(
-            {"filesAnnotations": [file_annotation.to_json() for file_annotation in model]},
-            f,
-            indent=4,
-        )
-
-
-def _export_entities_to_json(entities: list[Entity], file: str) -> None:
-    with open(file, "w") as f:
-        json.dump({"entities": [entity.to_json() for entity in entities]}, f, indent=4)
 
 
 def _parse_and_convert(args: Namespace, config: Config) -> None:
@@ -48,7 +35,7 @@ def _parse_and_convert(args: Namespace, config: Config) -> None:
     logger.debug(f"Found {len(model)} files with annotations")
 
     if args.annotations:
-        _export_annotations_to_json(model, config.output_annotations_file)
+        export_annotations_to_json(model, config.output_annotations_file)
         logger.debug(f"Annotations saved to '{config.output_annotations_file}'")
 
     logger.debug("Converting annotations to entities")
@@ -57,7 +44,7 @@ def _parse_and_convert(args: Namespace, config: Config) -> None:
     )
     entities: list[Entity] = converter.convert(model)
     logger.debug(f"Found {len(entities)} entities")
-    _export_entities_to_json(entities, config.output_entities_file)
+    export_entities_to_json(entities, config.output_entities_file)
     logger.debug(f"Entities saved to '{config.output_entities_file}'")
 
     print(
@@ -76,7 +63,12 @@ def run() -> None:
         parser: ArgumentParser = ArgumentParser(
             description="Parses annotations from source code and convert them to entities."
         )
-        parser.add_argument("path", help="Path to file or directory to parse", type=str)
+        parser.add_argument(
+            "-p",
+            "--path",
+            help="Path to file or directory to parse",
+            type=str,
+        )
         parser.add_argument(
             "-c",
             "--config",
@@ -89,7 +81,20 @@ def run() -> None:
             help="Parsed annotations will be saved to file if this flag is set",
             action="store_true",
         )
+        parser.add_argument(
+            "-v",
+            "--validate",
+            help="Validate and compare two model files (JSON). Provide two file paths.",
+            nargs=2,
+            metavar=("FILE1", "FILE2"),
+            type=str,
+        )
+
         args: Namespace = parser.parse_args()
+        if args.validate:
+            validate(*args.validate)
+            return
+
         config: Config = (
             Config.from_file(args.config)
             if args.config
