@@ -59,13 +59,11 @@ class AnnotationParser:
 
     def _convert_comment_to_annotation(self, comment: Comment) -> Annotation | None:
         tokens: list[str] = comment.text().strip().split(" ")
-        if len(tokens) < 1 or len(tokens) > 2:
-            return None
 
         annotation: str = tokens[0].strip()
         if not annotation.startswith(self.annotation_prefix):
             return None
 
         annotation_name: str = annotation[len(self.annotation_prefix) :]
-        value: str | None = tokens[1].strip() if len(tokens) == 2 else None
+        value: str | None = " ".join(tokens[1:]) if len(tokens) > 1 else None
         return Annotation(name=annotation_name, value=value, line_number=comment.line_number())

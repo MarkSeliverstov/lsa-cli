@@ -17,14 +17,16 @@ pip install lsa-cli
 ## Usage
 
 ```bash
-lsa-cli <path-to-source-code>
+lsa-cli <option>
 ```
 
 **Options:**
 
 ```bash
+-p, --path          Parse path
 -a, --annotations  Save intermediate annotations model as JSON
 -c, --config       Path to the configuration file
+-v, --validate     Validate and compare two model files (JSON). Provide two file paths.
 ```
 
 ### Example
@@ -55,7 +57,7 @@ export interface IAnnotation {
 }
 ```
 
-And generates the entities model by `lsa-cli source-file.ts`:
+And generates the entities model by `lsa-cli -p source-file.ts`:
 
 ```json
 {
@@ -133,7 +135,7 @@ Default configuration file is `.lsa-config.json` in the current working director
 You can specify the path to the configuration file using the `-c` option.
 
 ```bash
-lsa-cli -c <path-to-config-file> <path-to-source-code>
+lsa-cli -c <path-to-config-file> -p <path-to-source-code>
 ```
 
 If the file is not found, default configuration is used:
